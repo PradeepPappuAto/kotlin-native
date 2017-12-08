@@ -41,6 +41,8 @@ data class File constructor(internal val javaPath: Path) {
         get() = javaPath.parent.toString()
     val parentFile: File
         get() = File(javaPath.parent)
+    val segments: List<String>
+        get() = javaPath.map { it.toString() }
 
     val exists 
         get() = Files.exists(javaPath)
