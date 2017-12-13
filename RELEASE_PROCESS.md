@@ -14,7 +14,7 @@
 
 ### Build for all supported platforms ###
 
-Repeat those steps for macOS X, Linux x86-64 and Windows x64 machines/VMs:
+Repeat those steps for macOS, Linux x86-64 and Windows x64 machines/VMs:
 
     git pull
     git checkout -b v0.X-fixes origin/v0.X-fixes
