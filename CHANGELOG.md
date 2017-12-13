@@ -2,7 +2,8 @@
   * Reverse interop allowing to call Kotlin/Native code compiled as framework from Objective-C/Swift programs
   * Reverse interop allowing to call Kotlin/Native code compiled as shared object from C/C++ programs
   * Support generation of shared objects and DLLs by the compiler
-  * Migration to LLVM 5.0
+  * Migration to LLVM 5.0.0
+  * Support iOS simulator
   * Support WebAssembly target on Linux and Windows hosts
   * Make string conversions more robust
   * Support kotlin.math package

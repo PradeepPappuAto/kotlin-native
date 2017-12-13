@@ -9,8 +9,8 @@ include ':python_extension'
 include ':socket'
 include ':tetris'
 include ':tensorflow'
-// Android native activity build requires Android SDK. 
-// So temporary switching off for now, as it breaks the build 
+// Android native activity build requires Android SDK.
+// So temporary switching off for now, as it breaks the build
 // of other samples if SDK is not present.
 // include ':androidNativeActivity'
 include ':objc'

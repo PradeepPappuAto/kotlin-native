@@ -19,3 +19,10 @@ It will produce platform-specific shared object (.so on Linux, .dylib on macOS a
 C language header, allowing to use all public APIs available in your Kotlin/Native program from C code.
 See `samples/python_extension` as an example of using such shared object to provide a bridge between Python and
 Kotlin/Native.
+
+
+Q: How do I create frameworks for iOS and macOS?
+
+A: Use `-produce framework` compiler switch, or `konanArtifacts { framework {} }` in Gradle.
+It will allow to add Kotlin functionality easily to existing projects written
+in Objective-C or Swift.
