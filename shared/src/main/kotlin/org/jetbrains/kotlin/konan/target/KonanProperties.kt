@@ -62,12 +62,8 @@ class KonanProperties(val target: KonanTarget, val properties: Properties, val b
     val targetToolchain get() = hostTargetString("targetToolchain")
     val dependencies get() = hostTargetList("dependencies")
 
-    private fun absolute(value: String?): String {
-        val segments = File(value!!).segments
-        val dependency = segments.first()
-        val dependencyPath = dependencyProcessor!!.getDependency(dependency).absolutePath
-        return dependencyPath + "/" + segments.drop(1).joinToString("/")
-    }
+    private fun absolute(value: String?): String =
+            dependencyProcessor!!.resolveRelative(value!!).absolutePath
 
     val absoluteTargetSysRoot get() = absolute(targetSysRoot)
     val absoluteTargetToolchain get() = absolute(targetToolchain)

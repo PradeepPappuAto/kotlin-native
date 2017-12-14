@@ -266,9 +266,7 @@ TargetManager.enabled.each { target ->
     DependencyKind.values().each { kind ->
         def dir = kind.getDirectory(konanProperties)
         if (dir != null) {
-            String path = dependencyProcessor.getDependency(dir)
-                    .toPath().toFile().canonicalPath
-
+            String path = dependencyProcessor.resolveRelative(dir).canonicalPath
             rootProject.ext.set(kind.getPropertyName(target), path)
         }
     }

@@ -238,12 +238,26 @@ class DependencyProcessor(dependenciesRoot: File,
         dependency to candidate
     }.toMap()
 
-    fun getDependency(dependency: String): File {
+    private fun resolveDependency(dependency: String): File {
         val candidate = resolvedDependencies[dependency]
         return when (candidate) {
             is DependencySource.Local -> candidate.path
             is DependencySource.Remote -> File(dependenciesDirectory, dependency)
             null -> error("$dependency not declared as dependency")
+        }
+    }
+
+    fun resolveRelative(relative: String): File {
+        val path = Paths.get(relative)
+        if (path.isAbsolute) error("not a relative path: $relative")
+
+        val dependency = path.first().toString()
+        return resolveDependency(dependency).let {
+            if (path.nameCount > 1) {
+                it.toPath().resolve(path.subpath(1, path.nameCount)).toFile()
+            } else {
+                it
+            }
         }
     }
 
