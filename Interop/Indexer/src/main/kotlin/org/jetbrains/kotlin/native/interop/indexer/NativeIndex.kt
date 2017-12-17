@@ -44,6 +44,7 @@ interface HeaderInclusionPolicy {
 data class NativeLibrary(val includes: List<String>,
                          val additionalPreambleLines: List<String>,
                          val compilerArgs: List<String>,
+                         val headerToIdMapper: HeaderToIdMapper,
                          val language: Language,
                          val excludeSystemLibs: Boolean, // TODO: drop?
                          val excludeDepdendentModules: Boolean,
@@ -135,7 +136,9 @@ sealed class ObjCContainer {
     abstract val properties: List<ObjCProperty>
 }
 
-sealed class ObjCClassOrProtocol(val name: String) : ObjCContainer(), TypeDeclaration
+sealed class ObjCClassOrProtocol(val name: String) : ObjCContainer(), TypeDeclaration {
+    abstract val isForwardDeclaration: Boolean
+}
 
 data class ObjCMethod(
         val selector: String, val encoding: String, val parameters: List<Parameter>, private val returnType: Type,

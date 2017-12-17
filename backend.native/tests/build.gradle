@@ -2068,6 +2068,11 @@ task inline25(type: RunKonanTest) {
     source = "codegen/inline/inline25.kt"
 }
 
+task inline26(type: RunKonanTest) {
+    goldValue = "5\n"
+    source = "codegen/inline/inline26.kt"
+}
+
 task deserialized_inline0(type: RunKonanTest) {
     source = "serialization/deserialized_inline0.kt"
 }
@@ -2334,6 +2339,13 @@ if (isMac()) {
             }
         }
     }
+}
+
+task produce_dynamic(type: DynamicKonanTest) {
+    disabled = (project.testTarget != null && project.testTarget != project.hostName)
+    source = "produce_dynamic/simple/hello.kt"
+    cSource = "$projectDir/produce_dynamic/simple/main.c"
+    goldValue = "Hello, dynamic!\n"
 }
 
 task buildKonanTests(type: BuildKonanTest) {

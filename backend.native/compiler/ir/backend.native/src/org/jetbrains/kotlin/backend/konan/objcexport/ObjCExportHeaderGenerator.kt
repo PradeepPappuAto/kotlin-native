@@ -145,14 +145,14 @@ internal class ObjCExportHeaderGenerator(val context: Context) {
     }
 
     private val ClassDescriptor.superProtocolsClause: String get() {
-        val interfaces = this.getSuperInterfaces()
+        val interfaces = this.getSuperInterfaces().filter { mapper.shouldBeExposed(it) }
         return if (interfaces.isEmpty()) {
             ""
         } else buildString {
             append(" <")
-            interfaces.forEach {
+            interfaces.joinTo(this) {
                 translateInterface(it)
-                append(translateClassName(it))
+                translateClassName(it)
             }
             append(">")
         }
@@ -398,10 +398,7 @@ internal class ObjCExportHeaderGenerator(val context: Context) {
     }
 
     fun build(): List<String> = mutableListOf<String>().apply {
-        add("#import <stdint.h>")
-        add("#import <objc/NSObject.h>")
-        add("#import <CoreFoundation/CFBase.h>")
-        add("#import <Foundation/NSObjCRuntime.h>")
+        add("#import <Foundation/Foundation.h>")
         add("")
 
         if (classToName.isNotEmpty()) {
@@ -419,7 +416,8 @@ internal class ObjCExportHeaderGenerator(val context: Context) {
 
         add("@interface $kotlinAnyName : NSObject")
         add("-(instancetype) init __attribute__((unavailable));")
-        add("+(void)initialize;")
+        add("+(instancetype) new __attribute__((unavailable));")
+        add("+(void)initialize __attribute__((objc_requires_super));")
         add("@end;")
         add("")
 

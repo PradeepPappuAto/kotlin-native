@@ -54,7 +54,7 @@ class KonanConfig(val project: Project, val configuration: CompilerConfiguration
 
     private fun Distribution.prepareDependencies(checkDependencies: Boolean) {
         if (checkDependencies) {
-            DependencyProcessor(java.io.File(dependenciesDir), targetProperties).run()
+            targetProperties.downloadDependencies()
         }
     }
 
@@ -71,7 +71,7 @@ class KonanConfig(val project: Project, val configuration: CompilerConfiguration
     private val suffix = produce.suffix(target)
     val outputName = configuration.get(KonanConfigKeys.OUTPUT)?.removeSuffixIfPresent(suffix) ?: produce.name.toLowerCase()
     val outputFile = outputName
-        .prefixIfNot(prefix)
+        .prefixBaseNameIfNot(prefix)
         .suffixIfNot(suffix)
 
     val tempFiles = TempFiles(outputName)
